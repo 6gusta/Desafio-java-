@@ -1,12 +1,11 @@
 package desafioJava.projeto.model;
 
-
 import java.time.LocalDate;
 
 public abstract class Funcionario {
 
     private String nomefuncionario;
-    private Cargo  cargo;
+    private Cargo cargo;
     private LocalDate dataContratacao;
 
     public Funcionario(String nome, Cargo cargo, LocalDate dataContratacao) {
@@ -14,7 +13,6 @@ public abstract class Funcionario {
         this.cargo = cargo;
         this.dataContratacao = dataContratacao;
     }
-
 
     public String getNomefuncionario() {
         return nomefuncionario;
@@ -39,10 +37,13 @@ public abstract class Funcionario {
     public void setDataContratacao(LocalDate dataContratacao) {
         this.dataContratacao = dataContratacao;
     }
+
     protected long getAnosServico(int anoConsulta) {
         return anoConsulta - dataContratacao.getYear();
     }
 
-    public abstract double calcularSalario(int anoConsulta);
-
+    // Agora todos os métodos usam ano + mês
+    public abstract double calcularSalario(int ano, int mes);
+    public abstract double calcularSalarioBase(int ano, int mes);
+    public abstract double calcularBeneficio(int ano, int mes);
 }

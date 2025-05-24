@@ -1,22 +1,77 @@
-import desafioJava.projeto.model.Gerente;
-import desafioJava.projeto.model.Secretario;
-import desafioJava.projeto.model.Vendedor;
+import desafioJava.projeto.model.*;
+import desafioJava.projeto.service.FolhaPagamentoService;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Secretario sec = new Secretario("joaõ", LocalDate.of(2018,5, 1));
-        System.out.println("Salário Secretário 2022: " + sec.calcularSalario(2022));
+        List<Funcionario> funcionarios = new ArrayList<>();
 
-        Map<String, Double> vendas = new HashMap<>();
-        vendas.put("05/2025", 5000.0);
-        Vendedor vend = new Vendedor("Maria", LocalDate.of(2024, 5, 1), vendas);
-        System.out.println("Salário Vendedor 2025: " + vend.calcularSalario(2025));
+        // Secretários
+        funcionarios.add(new Secretario("Jorge Carvalho", LocalDate.of(2018, 1, 1)));
+        funcionarios.add(new Secretario("Maria Souza", LocalDate.of(2015, 12, 1)));
 
-        Gerente ger = new Gerente("Carlos", LocalDate.of(2020, 1, 1));
-        System.out.println("Salário Gerente 2025: " + ger.calcularSalario(2025));
+        // Vendedores com vendas
+        Map<String, Double> vendasAna = new HashMap<>();
+        vendasAna.put("12/2021", 5200.00);
+        vendasAna.put("01/2022", 4000.00);
+        vendasAna.put("02/2022", 4200.00);
+        vendasAna.put("03/2022", 5850.00);
+        vendasAna.put("04/2022", 7000.00);
+        funcionarios.add(new Vendedor("Ana Silva", LocalDate.of(2021, 12, 1), vendasAna));
+
+        Map<String, Double> vendasJoao = new HashMap<>();
+        vendasJoao.put("12/2021", 3400.00);
+        vendasJoao.put("01/2022", 7700.00);
+        vendasJoao.put("02/2022", 5000.00);
+        vendasJoao.put("03/2022", 5900.00);
+        vendasJoao.put("04/2022", 6500.00);
+        funcionarios.add(new Vendedor("João Mendes", LocalDate.of(2021, 12, 1), vendasJoao));
+
+        // Gerentes
+        funcionarios.add(new Gerente("Juliana Alves", LocalDate.of(2017, 7, 1)));
+        funcionarios.add(new Gerente("Bento Albino", LocalDate.of(2014, 3, 1)));
+
+        FolhaPagamentoService folhaService = new FolhaPagamentoService();
+
+        int anoConsulta = 2022;
+        int mesConsulta = 3; // março
+
+        double totalFolha = folhaService.calcularTotalPago(funcionarios, anoConsulta, mesConsulta);
+        System.out.println("Total da folha de pagamento em " + mesConsulta + "/" + anoConsulta + ": R$ " + totalFolha);
+
+        for (Funcionario f : funcionarios) {
+            double salario = f.calcularSalario(anoConsulta, mesConsulta);
+            System.out.println(f.getNomefuncionario() + " - Salário em " + mesConsulta + "/" + anoConsulta + ": R$ " + salario);
+        }
+
+        // Funcionário que mais recebeu
+        Funcionario topRecebedor = folhaService.buscarFuncionarioMaiorRecebimento(funcionarios, anoConsulta, mesConsulta);
+        System.out.println("\nFuncionário que mais recebeu em " + mesConsulta + "/" + anoConsulta + ": " + topRecebedor.getNomefuncionario());
+
+        // Filtrando apenas funcionários com benefício
+        List<Funcionario> comBeneficio = new ArrayList<>();
+        for (Funcionario f : funcionarios) {
+            if (f.getCargo() != Cargo.VENDENDOR) { // supondo que vendedor não tem benefício fixo
+                comBeneficio.add(f);
+            }
+        }
+
+        String nomeMaiorBeneficio = folhaService.buscarNomeMaiorBeneficio(comBeneficio, anoConsulta, mesConsulta);
+        System.out.println("Funcionário com maior benefício: " + nomeMaiorBeneficio);
+
+        // Vendedor que mais vendeu
+        List<Vendedor> vendedores = new ArrayList<>();
+        for (Funcionario f : funcionarios) {
+            if (f instanceof Vendedor) {
+                vendedores.add((Vendedor) f);
+            }
+        }
+
+        Vendedor topVendedor = folhaService.buscarVendedorMaiorVenda(vendedores, anoConsulta, mesConsulta);
+        if (topVendedor != null) {
+            System.out.println("Vendedor que mais vendeu: " + topVendedor.getNomefuncionario());
+        }
     }
 }

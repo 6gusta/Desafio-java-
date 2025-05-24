@@ -24,17 +24,26 @@ public class Vendedor extends Funcionario {
     }
 
     @Override
-    public double calcularSalario(int anoConsulta) {
-        long anosServico = getAnosServico(anoConsulta);
+    public double calcularSalario(int ano, int mes) {
+        long anosServico = getAnosServico(ano);
         double salario = SALARIO_BASE + (BENEFICIO_ANUAL * anosServico);
 
-        // Supondo que queremos o mês atual do ano de consulta
-        LocalDate hoje = LocalDate.now();
-        String chaveMesAno = String.format("%02d/%d", hoje.getMonthValue(), anoConsulta);
-
+        String chaveMesAno = String.format("%02d/%d", mes, ano);
         double valorVendidoMes = vendas.getOrDefault(chaveMesAno, 0.0);
         double beneficio = valorVendidoMes * 0.30;
 
         return salario + beneficio;
+    }
+
+    @Override
+    public double calcularSalarioBase(int ano, int mes) {
+        return SALARIO_BASE + (BENEFICIO_ANUAL * getAnosServico(ano));
+    }
+
+    @Override
+    public double calcularBeneficio(int ano, int mes) {
+        String chaveMesAno = String.format("%02d/%d", mes, ano);
+        double valorVendidoMes = vendas.getOrDefault(chaveMesAno, 0.0);
+        return valorVendidoMes * 0.30;
     }
 }

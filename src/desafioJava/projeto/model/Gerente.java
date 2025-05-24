@@ -12,8 +12,19 @@ public class Gerente extends Funcionario {
     }
 
     @Override
-    public double calcularSalario(int anoConsulta) {
-        long anosServico = getAnosServico(anoConsulta);
+    public double calcularSalario(int ano, int mes) {
+        long anosServico = getAnosServico(ano);
         return SALARIO_BASE + (BENEFICIO_ANUAL * anosServico);
+    }
+
+    @Override
+    public double calcularSalarioBase(int ano, int mes) {
+        return SALARIO_BASE;
+    }
+
+    @Override
+    public double calcularBeneficio(int ano, int mes) {
+        long anosServico = getAnosServico(ano);
+        return BENEFICIO_ANUAL * anosServico;
     }
 }
