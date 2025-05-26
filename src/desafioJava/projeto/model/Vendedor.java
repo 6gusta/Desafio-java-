@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class Vendedor extends Funcionario {
 
-    private static final double SALARIO_BASE = 12000.0;
-    private static final double BENEFICIO_ANUAL = 1800.0;
+    private static final double salariobase = 12000.0;
+    private static final double beneficioanual = 1800.0;
 
     private Map<String, Double> vendas;
 
@@ -26,7 +26,7 @@ public class Vendedor extends Funcionario {
     @Override
     public double calcularSalario(int ano, int mes) {
         long anosServico = getAnosServico(ano);
-        double salario = SALARIO_BASE + (BENEFICIO_ANUAL * anosServico);
+        double salario = salariobase + (beneficioanual * anosServico);
 
         String chaveMesAno = String.format("%02d/%d", mes, ano);
         double valorVendidoMes = vendas.getOrDefault(chaveMesAno, 0.0);
@@ -37,7 +37,7 @@ public class Vendedor extends Funcionario {
 
     @Override
     public double calcularSalarioBase(int ano, int mes) {
-        return SALARIO_BASE + (BENEFICIO_ANUAL * getAnosServico(ano));
+        return salariobase + (beneficioanual * getAnosServico(ano));
     }
 
     @Override

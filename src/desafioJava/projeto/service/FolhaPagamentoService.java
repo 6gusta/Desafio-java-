@@ -7,7 +7,6 @@ import java.util.List;
 
 public class FolhaPagamentoService {
 
-    // 1. Total pago (salário + benefício)
     public double calcularTotalPago(List<Funcionario> funcionarios, int ano, int mes) {
         double total = 0;
         for (Funcionario f : funcionarios) {
@@ -16,7 +15,6 @@ public class FolhaPagamentoService {
         return total;
     }
 
-    // 2. Total pago somente em salários base (sem benefícios)
     public double calcularTotalSalarios(List<Funcionario> funcionarios, int ano, int mes) {
         double total = 0;
         for (Funcionario f : funcionarios) {
@@ -25,7 +23,7 @@ public class FolhaPagamentoService {
         return total;
     }
 
-    // 3. Total pago somente em benefícios (lista só de funcionários que recebem benefício)
+
     public double calcularTotalBeneficios(List<Funcionario> funcionariosComBeneficio, int ano, int mes) {
         double total = 0;
         for (Funcionario f : funcionariosComBeneficio) {
@@ -34,7 +32,7 @@ public class FolhaPagamentoService {
         return total;
     }
 
-    // 4. Funcionário que mais recebeu (salário + benefício)
+
     public Funcionario buscarFuncionarioMaiorRecebimento(List<Funcionario> funcionarios, int ano, int mes) {
         Funcionario maiorRecebedor = null;
         double maiorValor = Double.MIN_VALUE;
@@ -49,7 +47,7 @@ public class FolhaPagamentoService {
         return maiorRecebedor;
     }
 
-    // 5. Funcionário com maior benefício
+
     public String buscarNomeMaiorBeneficio(List<Funcionario> funcionariosComBeneficio, int ano, int mes) {
         Funcionario maiorBeneficiado = null;
         double maiorBeneficio = Double.MIN_VALUE;
@@ -64,7 +62,7 @@ public class FolhaPagamentoService {
         return (maiorBeneficiado != null) ? maiorBeneficiado.getNomefuncionario() : null;
     }
 
-    // 6. Vendedor que mais vendeu no mês
+
     public Vendedor buscarVendedorMaiorVenda(List<Vendedor> vendedores, int ano, int mes) {
         Vendedor maiorVendedor = null;
         double maiorVenda = Double.MIN_VALUE;

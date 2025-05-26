@@ -17,7 +17,7 @@ public class Secretario extends Funcionario {
 
     @Override
     public double calcularSalarioBase(int ano, int mes) {
-        return 7000.0;  // valor fixo
+        return 7000.0;
     }
 
     @Override

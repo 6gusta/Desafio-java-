@@ -8,11 +8,11 @@ public class Main {
     public static void main(String[] args) {
         List<Funcionario> funcionarios = new ArrayList<>();
 
-        // Secretários
+
         funcionarios.add(new Secretario("Jorge Carvalho", LocalDate.of(2018, 1, 1)));
         funcionarios.add(new Secretario("Maria Souza", LocalDate.of(2015, 12, 1)));
 
-        // Vendedores com vendas
+
         Map<String, Double> vendasAna = new HashMap<>();
         vendasAna.put("12/2021", 5200.00);
         vendasAna.put("01/2022", 4000.00);
@@ -29,14 +29,13 @@ public class Main {
         vendasJoao.put("04/2022", 6500.00);
         funcionarios.add(new Vendedor("João Mendes", LocalDate.of(2021, 12, 1), vendasJoao));
 
-        // Gerentes
         funcionarios.add(new Gerente("Juliana Alves", LocalDate.of(2017, 7, 1)));
         funcionarios.add(new Gerente("Bento Albino", LocalDate.of(2014, 3, 1)));
 
         FolhaPagamentoService folhaService = new FolhaPagamentoService();
 
         int anoConsulta = 2022;
-        int mesConsulta = 3; // março
+        int mesConsulta = 3;
 
         double totalFolha = folhaService.calcularTotalPago(funcionarios, anoConsulta, mesConsulta);
         System.out.println("Total da folha de pagamento em " + mesConsulta + "/" + anoConsulta + ": R$ " + totalFolha);
@@ -46,14 +45,14 @@ public class Main {
             System.out.println(f.getNomefuncionario() + " - Salário em " + mesConsulta + "/" + anoConsulta + ": R$ " + salario);
         }
 
-        // Funcionário que mais recebeu
+
         Funcionario topRecebedor = folhaService.buscarFuncionarioMaiorRecebimento(funcionarios, anoConsulta, mesConsulta);
         System.out.println("\nFuncionário que mais recebeu em " + mesConsulta + "/" + anoConsulta + ": " + topRecebedor.getNomefuncionario());
 
-        // Filtrando apenas funcionários com benefício
+
         List<Funcionario> comBeneficio = new ArrayList<>();
         for (Funcionario f : funcionarios) {
-            if (f.getCargo() != Cargo.VENDENDOR) { // supondo que vendedor não tem benefício fixo
+            if (f.getCargo() != Cargo.VENDENDOR) {
                 comBeneficio.add(f);
             }
         }
@@ -61,7 +60,6 @@ public class Main {
         String nomeMaiorBeneficio = folhaService.buscarNomeMaiorBeneficio(comBeneficio, anoConsulta, mesConsulta);
         System.out.println("Funcionário com maior benefício: " + nomeMaiorBeneficio);
 
-        // Vendedor que mais vendeu
         List<Vendedor> vendedores = new ArrayList<>();
         for (Funcionario f : funcionarios) {
             if (f instanceof Vendedor) {

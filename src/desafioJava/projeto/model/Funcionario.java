@@ -42,7 +42,6 @@ public abstract class Funcionario {
         return anoConsulta - dataContratacao.getYear();
     }
 
-    // Agora todos os métodos usam ano + mês
     public abstract double calcularSalario(int ano, int mes);
     public abstract double calcularSalarioBase(int ano, int mes);
     public abstract double calcularBeneficio(int ano, int mes);
